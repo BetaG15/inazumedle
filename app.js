@@ -259,6 +259,7 @@ const players = [
     element: "Bosque",
     image: "img/Aquilina.webp",
     age: "Adulto",
+    gender: "Femenino",
     debut: "Inazuma Eleven 2",
   },
   {
@@ -268,7 +269,7 @@ const players = [
     element: "Aire",
     image: "img/Frank.webp",
     age: "Adulto",
-    gender: "Femenino",
+    gender: "Masculino",
     debut: "Inazuma Eleven",
   },
   {
