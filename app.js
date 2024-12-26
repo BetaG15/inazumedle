@@ -1024,7 +1024,7 @@ const players = [
   },
   {
     name: "Archer Hawkins",
-    teams: ["Inazuam Japon"],
+    teams: ["Inazuma Japon"],
     position: "Defensa",
     element: "Aire",
     image: "img/29_Archer.webp",
