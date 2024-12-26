@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/autosuggest@1.0.0/dist/autosuggest.min.js"></script>
+  <title>Inazumedle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url("https://pbs.twimg.com/media/FayuYVrXEAAwSjX.jpg:large");
+      background-attachment: fixed; /* Hace que la imagen de fondo sea fija */
+      background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      margin: 20px 0; /* Ajusta el espacio alrededor del título */
+      font-family: 'GarageShockCondensed Heavy', sans-serif;
+      font-weight: normal;
+      font-size: 62px;
+
+      /* Aplicar degradado */
+      background: linear-gradient(to bottom, rgb(255, 230, 0), rgb(247, 115, 54));
+      -webkit-background-clip: text; /* Aplica el degradado al texto */
+      background-clip: text; /* Propiedad estándar para compatibilidad */
+      -webkit-text-fill-color: transparent; /* Hace el texto hueco */
+
+      /* Borde negro usando text-stroke */
+      -webkit-text-stroke: 3px black; /* Aplica el borde negro */
+    }
+    .suggestion-item {
+      padding: 10px;
+      cursor: pointer;
+      display: flex; /* Alineamos la imagen y el nombre horizontalmente */
+      align-items: center; /* Centrado verticalmente */
+    }
+    .suggestion-content {
+      display: flex;
+      align-items: center; /* Alineamos la imagen y el texto en el centro */
+    }
+    .suggestion-item:hover {
+      background-color: #555;
+    }
+    .suggestion-item img {
+      width: 30px; /* Tamaño de la imagen en las sugerencias */
+      height: 30px; /* Tamaño de la imagen */
+      object-fit: cover; /* Asegura que la imagen no se distorsione */
+      margin-right: 10px; /* Espacio entre la imagen y el nombre */
+    }
+    .suggestion-item span {
+      font-size: 1rem;
+      color: white;
+    }
+    #playerInput {
+      display: none; /* Ocultar el campo de entrada al inicio */
+    }
+    button, input[type="text"] {
+      font-size: 1.2rem; /* Tamaño de texto más grande */
+      padding: 5px 5px; /* Aumenta el espacio interno */
+      border-radius: 8px; /* Bordes redondeados (opcional) */
+    }
+    button {
+      background-color: #007bff; /* Cambia el color del botón */
+      color: white; /* Color del texto del botón */
+      border: none;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+    button:hover {
+      background-color: #0056b3; /* Color al pasar el ratón */
+    }
+    input[type="text"] {
+      width: 100%; /* Ajusta el ancho */
+      border: 1px solid #ccc; /* Bordes del campo */
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra opcional */
+      margin-right: 5px;
+    }
+    input[type="text"]:focus {
+      outline: none; /* Elimina el borde azul predeterminado */
+      border-color: #007bff; /* Cambia el color al enfocarse */
+    }
+    .game-container {
+      margin: 0 auto;
+      max-width: 800px;
+    }
+    #suggestions {
+      background-color: #333;
+      color: white;
+      border: 1px solid #555;
+      position: absolute;
+      max-height: 150px;
+      overflow-y: auto;
+      width: 300px;
+      margin-top: -1px;
+      z-index: 1000;
+    }
+    #suggestions:empty {
+      display: none;
+    }
+    .suggestion-item {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .suggestion-item:hover {
+      background-color: #555;
+    }
+    .color-box {
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+    }
+    .green {
+      background-color: green;
+    }
+    .yellow {
+      background-color: yellow;
+      color: black;
+    }
+    .red {
+      background-color: red;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #444;
+    }
+    th, td {
+      padding: 10px;
+    }
+    th {
+      background-color: #2c2c4d;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>INAZUMEDLE</h1>
+    <button id="playGame">Jugar</button>
+    <p id="feedback">Presiona "Jugar" para empezar</p>
+
+    <div style="position: relative; display: inline-block;">
+      <input type="text" id="playerInput" placeholder="Escribe el nombre del jugador" autocomplete="off" />
+      <div id="suggestions"></div>
+    </div>
+    <button id="submitGuess">Adivinar</button>
+    <br>
+    <br>
+
+    <table id="attempts" style=" margin: auto;">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Equipos</th>
+          <th>Posición</th>
+          <th>Elemento</th>
+          <th>Curso</th>
+          <th>Genero</th>
+          <th>Debut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Los intentos aparecerán aquí -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
